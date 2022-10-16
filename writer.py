@@ -81,7 +81,24 @@ def addActual(d):
     f = open("test.json", "w")
     json.dump(jsonObject, f)
     f.close()
-    calculate_TVD()
+    x = calculate_TVD()
+    points = calculate_points(x)
+
+    with open("test.json") as jsonFile:
+        jsonObject = json.load(jsonFile)
+        jsonFile.close()
+
+    myObj = jsonObject[-1].copy()
+    myObj["points"] = points
+    print(myObj)
+
+    jsonObject.pop()
+    jsonObject.append(myObj)
+
+    f = open("test.json", "w")
+    json.dump(jsonObject, f)
+    f.close()
+
     return _corsify_actual_response(jsonify({'yoyoyo my name is BILL': 200}))
 
 
@@ -137,15 +154,37 @@ def calculate_TVD():
 
     return tvd_result
 
-@app.route('/readTVD/', methods=["POST"])
+# @app.route('/readTVD/', methods=["POST"])
 def read_TVD():
-    _build_cors_preflight_response()
+    # _build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
-    if jsonFile[-1]["name"] == "expected":
+    if jsonObject[-1]["name"] == "expected":
+        # return -1
         return _corsify_actual_response(jsonify({'TVD': -1.0}))
-    return _corsify_actual_response(jsonify({'TVD': jsonFile[-1]["TVD"]})) 
+    # return jsonObject[-1]["TVD"]
+    return _corsify_actual_response(jsonify({'TVD': jsonObject[-1]["TVD"]}))
+
+# points system
+# if it is going down
+
+def calculate_points(tvd):
+    if tvd <= 0.1:
+        return 100
+    elif tvd <= 0.15:
+        return 75
+    elif tvd <= 0.2:
+        return 50
+    elif tvd <= 0.25:
+        return 25
+    elif tvd <= .5:
+        return 15
+    elif tvd <= .9:
+        return 5
+    else:
+        return 0
+
 
 def _build_cors_preflight_response():
     response = make_response()
