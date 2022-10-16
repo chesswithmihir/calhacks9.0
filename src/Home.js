@@ -1,6 +1,7 @@
 import React from 'react';
 import './Productivity.css';
-import useState from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Home(props){
 
@@ -9,10 +10,17 @@ function Home(props){
 
     const saveValues = () => {
         let temp = actualValues;
-        for (const i in activities){
+        for (const i of activities){
+            console.log(i)
             temp[document.getElementById(i).value] = document.getElementById(i + "1").value;
         }
         setActualValues(temp);
+        axios({
+            url: 'http://127.0.0.1:5000/addActual/' + JSON.stringify(temp).toString(),
+            method: "POST"
+        }) .then((response) => {
+            console.log(response)
+          })
     }
 
     return(
@@ -28,7 +36,7 @@ function Home(props){
                     </div>
                     <div class = "form">
                         <form class = "formLayout">
-                            {activities?.map(activity => <input id = {activity} value={activity} readonly = "readonly" />)}
+                            {activities?.map(activity => <input id = {activity} value={activity} readOnly = "readonly" />)}
                         </form>
                     </div>
                 </div>
