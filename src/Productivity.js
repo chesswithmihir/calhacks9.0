@@ -3,7 +3,8 @@ import './Productivity.css';
 import { useState } from 'react';
 import axios from "axios";
 
-function Productivity(){
+function Productivity(props){
+    const {switchView} = props;
 
     const [currRow, setCurrRow] = useState(1);
     const [rowNameInputs, setRowNameInputs] = useState(
@@ -37,7 +38,7 @@ function Productivity(){
         }) .then((response) => {
             console.log(response)
           })
-        console.log("HI")
+        switchView(Object.keys(temp))
     }
 
     const addInput = () => {
