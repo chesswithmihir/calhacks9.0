@@ -1,7 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
+import './Productivity.css';
+import useState from 'react';
 
-function Home(){
+function Home(props){
+
+    const {activities} = props;
+    const [actualValues, setActualValues] = useState({});
+
+    const saveValues = () => {
+        let temp = actualValues;
+        for (const i in activities){
+            temp[document.getElementById(i).value] = document.getElementById(i + "1").value;
+        }
+        setActualValues(temp);
+    }
 
     return(
         <div>
@@ -16,7 +28,7 @@ function Home(){
                     </div>
                     <div class = "form">
                         <form class = "formLayout">
-                            {Object.values(rowNameInputs)}
+                            {activities?.map(activity => <input id = {activity} value={activity} readonly = "readonly" />)}
                         </form>
                     </div>
                 </div>
@@ -27,12 +39,14 @@ function Home(){
                     </div>
                     <div class = "form">
                         <form class = "formLayout">
-                            {Object.values(rowHourInputs)}
+                            {activities?.map(activity => <input id = {activity + "1"} type="text" />)}
                         </form>
                     </div>
                 </div>
             </div>
-
+            <div class = "save">
+                <button onClick = {saveValues}> Save </button>
+            </div>
         </div>
     );
 }

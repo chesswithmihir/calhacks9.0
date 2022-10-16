@@ -31,12 +31,13 @@ function Productivity(){
         setActivities(temp);
         console.log(temp);
         console.log("JSON " + JSON.stringify(temp));
-        const x = 'http://127.0.0.1:5000/addExpected/' + JSON.stringify(temp).toString() + ""
-        console.log(x);
-        axios.post(x)
-          .then((response) => {
+        axios({
+            url: 'http://127.0.0.1:5000/addExpected/' + JSON.stringify(temp).toString(),
+            method: "POST"
+        }) .then((response) => {
             console.log(response)
           })
+        console.log("HI")
     }
 
     const addInput = () => {
