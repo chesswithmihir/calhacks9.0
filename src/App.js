@@ -4,11 +4,26 @@ import Navbar from './Navbar.js';
 import Home from './Home.js';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Log from './Logs.js';
 
 function App() {
   const [productivityView, setProductivityView] = useState(true);
   const [homeView, setHomeView] = useState(false);
+  const[logView, setLogView] = useState(false);
   const [activities, setActivities] = useState([]);
+
+  function change() {
+    if(activities){
+      setProductivityView(false)
+      setLogView(false)
+      setHomeView(true)
+    }
+    else{
+      setProductivityView(true)
+      setHomeView(false)
+      setLogView(false)
+    }
+  }
 
   function changeToHome(preSet) {
     if (preSet) {
@@ -24,6 +39,13 @@ function App() {
     }
     setHomeView(true);
     setProductivityView(false);
+    setLogView(false);
+  }
+
+  function changeToLogs() {
+    setHomeView(false);
+    setProductivityView(false);
+    setLogView(true)
   }
 
   useEffect(() => {
@@ -45,9 +67,10 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar setHome = {changeToHome} setProductivity = {setProductivityView}/>
+      <Navbar setHome = {changeToHome} change = {change} setLogs = {changeToLogs}/>
       {productivityView && <Productivity switchView={changeToHome} />}
       {homeView && <Home activities={activities}/>}
+      {logView && <Log />}
     </div>
   );
 }

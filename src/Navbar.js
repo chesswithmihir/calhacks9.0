@@ -2,7 +2,7 @@ import React from 'react';
 import './Navbar.css';
 
 function Navbar(props) {
-    const {setHome, setProductivity} = props;
+    const {setHome, change, setLogs} = props;
 
     return (
         <header class = "bar">
@@ -11,9 +11,8 @@ function Navbar(props) {
             </div>
             <nav class = "sublinks">
                 <ul>
-                    <li> <button class = "navButton" onClick={setHome}>Home</button> </li>
-                    <li> Set Goals </li>
-                    <li> View Logs </li> 
+                    <li> <button class = "navButton" onClick={change}>Home</button> </li>
+                    <li> <button class = "navButton" onClick={setLogs}>Logs</button> </li> 
                 </ul>
             </nav>        
         </header>
