@@ -1,7 +1,9 @@
 import React from 'react';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar(props) {
+    const {setHome, setProductivity} = props;
+
     return (
         <header class = "bar">
             <div class = "app-title">
@@ -9,7 +11,7 @@ function Navbar() {
             </div>
             <nav class = "sublinks">
                 <ul>
-                    <li> Home </li>
+                    <li> <button class = "navButton" onClick={setHome}>Home</button> </li>
                     <li> Set Goals </li>
                     <li> View Logs </li> 
                 </ul>

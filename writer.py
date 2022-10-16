@@ -34,7 +34,7 @@ def addExpected(d):
 # json.dump(d, f)
 # f.close()
 
-
+@app.route('/readExpected', methods=["GET"])
 def read_expected():
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
@@ -47,10 +47,9 @@ def read_expected():
             result = []
             for j in jsonObject[i]["values"]:
                 result.append(j)
-            return result
-    return []
+            return _corsify_actual_response(jsonify(result))
+    return _corsify_actual_response(jsonify([]))
 
-print(read_expected())
 
 def _build_cors_preflight_response():
     response = make_response()
