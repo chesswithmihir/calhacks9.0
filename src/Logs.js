@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './Logs.css'
 
 function Logs(){
 
@@ -33,6 +34,16 @@ function Logs(){
             <div class = "stats">
                 <h2>{tvd != -1 ? "Your TVD for today is " + tvd : "No stats have yet been entered today!"}</h2>
                 <h2>{tvd != -1 ? "Your total points are " + totalScore : ""}</h2>
+            </div>
+
+            <div class = "about">
+                <p>How to interpret these stats:<br/>
+                    TVD (Total Variation Distance): TVD is a metric for comparing the proportion of time you've allocated for each activity
+                    with the proportion of time you had planned to spend on each activity. <br/> A TVD score close to 0 means you've met your goal;
+                    the proportion of time spent on each activity resembles that of your goals!  
+                    <br/> <br/>
+                    Points: Points are a fun rewards based system for meeting your goals! The lower your TVD score, the more points you get that day!
+                </p>
             </div>
 
         </div>
