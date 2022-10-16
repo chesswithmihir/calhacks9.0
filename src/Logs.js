@@ -6,6 +6,7 @@ function Logs(){
 
     const [tvd, setTVD] = useState(-1)
     const [totalScore, setTotalScore] = useState(0)
+    const [expected, setExpected] = useState({})
 
     useEffect(() =>{
         axios({
@@ -23,7 +24,14 @@ function Logs(){
             console.log(response)
             setTotalScore(response.data.total)
           })
-    }, [])
+
+          axios({
+            url: "http://127.0.0.1:5000/readExpected/",
+            method: "POST"}).then((response) => {
+                setExpected(response.data)
+            })
+
+        }, [])
 
     return(
         <div>
@@ -34,6 +42,11 @@ function Logs(){
             <div class = "stats">
                 <h2>{tvd != -1 ? "Your TVD for today is " + tvd : "No stats have yet been entered today!"}</h2>
                 <h2>{tvd != -1 ? "Your total points are " + totalScore : ""}</h2>
+            </div>
+
+            <div class = "expected">
+                <h3>These are your goals for today:</h3>
+                {Object.keys(expected).map(exp => <h4>{exp} - {expected[exp]}</h4>)}
             </div>
 
             <div class = "about">

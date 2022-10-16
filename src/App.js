@@ -16,7 +16,7 @@ function App() {
     axios({
       url: "http://127.0.0.1:5000/readExpected/",
       method: "POST"}).then((response) => {
-      setActivities(response.data)
+      setActivities(Object.keys(response.data))
       console.log(response)
     });
 
@@ -40,7 +40,7 @@ function App() {
       axios({
         url: "http://127.0.0.1:5000/readExpected/",
         method: "POST"}).then((response) => {
-        setActivities(response.data)
+        setActivities(Object.keys(response.data))
         console.log(response)
       });
     }
@@ -59,8 +59,9 @@ function App() {
     axios({
       url: "http://127.0.0.1:5000/readExpected/",
       method: "POST"}).then((response) => {
-      setActivities(response.data)
-      if (response.data.length == 0) {
+      console.log(response)
+      setActivities(Object.keys(response.data))
+      if (Object.keys(response.data).length == 0) {
         setProductivityView(true);
         setHomeView(false)
       }

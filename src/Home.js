@@ -29,6 +29,7 @@ function Home(props){
             url: 'http://127.0.0.1:5000/readActual/',
             method: "POST"
         }) .then((response) => {
+            console.log()
             setActualValues(response.data)
           })
     }, [])

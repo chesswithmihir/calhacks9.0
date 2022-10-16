@@ -69,9 +69,9 @@ def calculate_points(tvd):
     else:
         return 0
 
-#@app.route('/findTotalScore/', methods=["POST"])
+@app.route('/findTotalScore/', methods=["POST"])
 def find_total_score():
-    #_build_cors_preflight_response()
+    _build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
@@ -89,8 +89,7 @@ def find_total_score():
                 total += curr
                 multipler = 0
             prev = curr
-    # return _corsify_actual_response(jsonify({'total': total}))
-    return total
+    return _corsify_actual_response(jsonify({'total': total}))
 
 def calculate_TVD():
     with open("test.json") as jsonFile:
@@ -100,14 +99,16 @@ def calculate_TVD():
     actual_values = (jsonObject[-1]["values"])
     expected_distribution = []
     actual_distribution = []
-    for entry in expected_values:
+
+    s_e = sorted(expected_values.keys(), key=lambda x:x.lower())
+    for entry in s_e:
         expected_distribution.append(expected_values[entry])
     expected_sum = sum(expected_distribution)
     for i in range(len(expected_distribution)):
          expected_distribution[i] /= expected_sum
 
-
-    for entry in actual_values:
+    s_a = sorted(actual_values.keys(), key=lambda x:x.lower())
+    for entry in s_a:
         actual_distribution.append(actual_values[entry])
     actual_sum = sum(actual_distribution)
     for i in range(len(actual_distribution)):
