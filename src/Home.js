@@ -1,12 +1,13 @@
 import React from 'react';
 import './Productivity.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Home(props){
 
     const {activities} = props;
-    const [actualValues, setActualValues] = useState({});
+    const [actualValues, setActualValues] = useState({'': ''});
+
 
     const saveValues = () => {
         let temp = actualValues;
@@ -21,6 +22,23 @@ function Home(props){
         }) .then((response) => {
             console.log(response)
           })
+    }
+
+    useEffect(() => {
+        axios({
+            url: 'http://127.0.0.1:5000/readActual/',
+            method: "POST"
+        }) .then((response) => {
+            setActualValues(response.data)
+          })
+    }, [])
+
+    const modifyHours = (e, activity) => {
+        let temp = actualValues
+        temp[activity] = e.target.value
+        console.log(temp)
+        setActualValues(temp)
+        console.log(actualValues)
     }
 
     return(
@@ -47,7 +65,7 @@ function Home(props){
                     </div>
                     <div class = "form">
                         <form class = "formLayout">
-                            {activities?.map(activity => <input id = {activity + "1"} type="text" />)}
+                            {activities?.map(activity => <input id = {activity + "1"} defaultValue={actualValues[activity]} type="text" />)}
                         </form>
                     </div>
                 </div>
