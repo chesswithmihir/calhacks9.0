@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 @app.route('/addExpected/<d>', methods=["POST"])
 def addExpected(d):
+    _build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
@@ -26,8 +27,19 @@ def addExpected(d):
     json.dump(jsonObject, f)
     f.close()
 
-    return 'yoyoyo my name is joe'
+    return _corsify_actual_response('yoyoyo my name is joe')
 
 # f = open("test2.json", "w")
 # json.dump(d, f)
 # f.close()
+
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
