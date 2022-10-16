@@ -13,7 +13,14 @@ function App() {
   const [activities, setActivities] = useState([]);
 
   function change() {
-    if(activities){
+    axios({
+      url: "http://127.0.0.1:5000/readExpected/",
+      method: "POST"}).then((response) => {
+      setActivities(response.data)
+      console.log(response)
+    });
+
+    if(activities.length > 0){
       setProductivityView(false)
       setLogView(false)
       setHomeView(true)

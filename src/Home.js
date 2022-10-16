@@ -6,7 +6,7 @@ import axios from 'axios';
 function Home(props){
 
     const {activities} = props;
-    const [actualValues, setActualValues] = useState({});
+    const [actualValues, setActualValues] = useState({'': ''});
 
 
     const saveValues = () => {
@@ -33,6 +33,14 @@ function Home(props){
           })
     }, [])
 
+    const modifyHours = (e, activity) => {
+        let temp = actualValues
+        temp[activity] = e.target.value
+        console.log(temp)
+        setActualValues(temp)
+        console.log(actualValues)
+    }
+
     return(
         <div>
             <div class = "prompt">
@@ -57,7 +65,7 @@ function Home(props){
                     </div>
                     <div class = "form">
                         <form class = "formLayout">
-                            {activities?.map(activity => <input id = {activity + "1"} value={actualValues[activity] || 0} type="text" />)}
+                            {activities?.map(activity => <input id = {activity + "1"} defaultValue={actualValues[activity]} type="text" />)}
                         </form>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ function Navbar(props) {
     return (
         <header class = "bar">
             <div class = "app-title">
-                <h1>Productivity</h1>
+                <h1>ProducTVD</h1>
             </div>
             <nav class = "sublinks">
                 <ul>
