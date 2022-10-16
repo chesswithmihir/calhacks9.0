@@ -14,14 +14,12 @@ def addExpected(d):
 
 
     #d = {"Netflix" : 9, "Work" : 8, "Sleep" : 7}
-    print(d)
     d = json.loads(d)
 
     def convertToProportions(d):
         for entry in d:
             d[entry] = int(d[entry]) / 24
     convertToProportions(d)
-    #print(d)
 
     new_dict = {"Date" : str(date.today()), "name" : "expected", "values" : d}
     jsonObject.append(new_dict)
@@ -35,6 +33,24 @@ def addExpected(d):
 # f = open("test2.json", "w")
 # json.dump(d, f)
 # f.close()
+
+
+def read_expected():
+    with open("test.json") as jsonFile:
+        jsonObject = json.load(jsonFile)
+        jsonFile.close()
+
+    date1 = str(date.today())
+
+    for i in range(len(jsonObject)):
+        if jsonObject[i]["Date"] == date1:
+            result = []
+            for j in jsonObject[i]["values"]:
+                result.append(j)
+            return result
+    return []
+
+print(read_expected())
 
 def _build_cors_preflight_response():
     response = make_response()
