@@ -154,9 +154,9 @@ def calculate_TVD():
 
     return tvd_result
 
-# @app.route('/readTVD/', methods=["POST"])
+@app.route('/readTVD/', methods=["POST"])
 def read_TVD():
-    # _build_cors_preflight_response()
+    _build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
