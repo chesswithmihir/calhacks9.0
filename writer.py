@@ -14,11 +14,10 @@ def read_expected():
     date1 = str(date.today())
     for i in range(len(jsonObject)):
         if jsonObject[i]["Date"] == date1:
-            result = []
-            for j in jsonObject[i]["values"]:
-                result.append(j)
-            return _corsify_actual_response(jsonify(result))
-    return _corsify_actual_response(jsonify([]))
+            return _corsify_actual_response(jsonify(jsonObject[i]["values"]))
+    return _corsify_actual_response(jsonify({}))
+
+
 
 @app.route('/addExpected/<d>', methods=["POST"])
 def addExpected(d):
@@ -92,7 +91,6 @@ def find_total_score():
             prev = curr
     # return _corsify_actual_response(jsonify({'total': total}))
     return total
-print(find_total_score())
 
 def calculate_TVD():
     with open("test.json") as jsonFile:
