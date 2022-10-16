@@ -42,8 +42,32 @@ def addActual(d):
         jsonObject = json.load(jsonFile)
         jsonFile.close()
 
+    d = json.loads(d)
 
-@app.route('/readExpected', methods=["GET"])
+    for entry in d:
+        d[entry] = int(d[entry])
+
+    # today's actual not in json
+    if (jsonObject[-1]["name"] == "actual"):
+        # def convertToProportions(d):
+        #     for entry in d:
+        #         for name in jsonObject[-1]["values"]:
+        #             jsonObject[-1]["values"][name]
+        #         d[entry] = int(d[entry]) / 24
+        # convertToProportions(d)
+
+
+        # remove last element of list
+        jsonObject.pop()
+    new_dict = {"Date" : str(date.today()), "name" : "actual", "values" : d}
+    jsonObject.append(new_dict)
+    print(jsonObject)
+    f = open("test.json", "w")
+    json.dump(jsonObject, f)
+    f.close()
+
+    # return _corsify_actual_response(jsonify({'yoyoyo my name is BILL': 200}))
+
 def read_expected():
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
@@ -56,8 +80,8 @@ def read_expected():
             result = []
             for j in jsonObject[i]["values"]:
                 result.append(j)
-            return _corsify_actual_response(jsonify(result))
-    return _corsify_actual_response(jsonify([]))
+            return result
+    return []
 
 def read_actual():
     with open("test.json") as jsonFile:
