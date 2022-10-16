@@ -81,20 +81,62 @@ def addActual(d):
     f = open("test.json", "w")
     json.dump(jsonObject, f)
     f.close()
-
+    calculate_TVD()
     return _corsify_actual_response(jsonify({'yoyoyo my name is BILL': 200}))
 
 
-
+# flask this up
+@app.route('/readActual/', methods=["POST"])
 def read_actual():
+    _build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
     if jsonObject[-1]["name"] == "actual" and str(date.today() == jsonObject[-1]["Date"]):
-        return jsonObject[-1]["values"]
-    return {}
+        return _corsify_actual_response(jsonify(jsonObject[-1]["values"]))
+    return _corsify_actual_response(jsonify({}))
+
+def calculate_TVD():
+    with open("test.json") as jsonFile:
+        jsonObject = json.load(jsonFile)
+        jsonFile.close()
+    expected_values = (jsonObject[-2]["values"])
+    actual_values = (jsonObject[-1]["values"])
+    expected_distribution = []
+    actual_distribution = []
+    for entry in expected_values:
+        expected_distribution.append(expected_values[entry])
+    expected_sum = sum(expected_distribution)
+    for i in range(len(expected_distribution)):
+         expected_distribution[i] /= expected_sum
 
 
+    for entry in actual_values:
+        actual_distribution.append(actual_values[entry])
+    actual_sum = sum(actual_distribution)
+    for i in range(len(actual_distribution)):
+        actual_distribution[i] /= actual_sum
+    print("Expected: " + str(expected_distribution))
+    print("Actual: " + str(actual_distribution))
+
+    total = 0
+    for i in range(len(expected_distribution)):
+        total += abs(expected_distribution[i] - actual_distribution[i])
+    tvd_result = 0.5 * total
+
+    myObj = jsonObject[-1].copy()
+    myObj["TVD"] = tvd_result
+    print(myObj)
+
+    jsonObject.pop()
+    jsonObject.append(myObj)
+
+    f = open("test.json", "w")
+    json.dump(jsonObject, f)
+    f.close()
+
+    return tvd_result
+print(calculate_TVD())
 
 def _build_cors_preflight_response():
     response = make_response()
