@@ -70,9 +70,9 @@ def calculate_points(tvd):
     else:
         return 0
 
-@app.route('/findTotalScore/', methods=["POST"])
+#@app.route('/findTotalScore/', methods=["POST"])
 def find_total_score():
-    _build_cors_preflight_response()
+    #_build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
@@ -90,8 +90,9 @@ def find_total_score():
                 total += curr
                 multipler = 0
             prev = curr
-    return _corsify_actual_response(jsonify({'total': total}))
-
+    # return _corsify_actual_response(jsonify({'total': total}))
+    return total
+print(find_total_score())
 
 def calculate_TVD():
     with open("test.json") as jsonFile:
