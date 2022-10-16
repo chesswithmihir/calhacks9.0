@@ -30,7 +30,10 @@ function Productivity(){
         }
         setActivities(temp);
         console.log(temp);
-        axios.post('http://127.0.0.1:5000/addExpected', {...temp})
+        console.log("JSON " + JSON.stringify(temp));
+        const x = 'http://127.0.0.1:5000/addExpected/' + JSON.stringify(temp).toString() + ""
+        console.log(x);
+        axios.post(x)
           .then((response) => {
             console.log(response)
           })
@@ -42,7 +45,7 @@ function Productivity(){
         setRowNameInputs(oldInputs => [...oldInputs, <input id = {currRow*2} type = "text"/>])
         setRowHourInputs(oldInputs => [...oldInputs, <input id = {currRow*2+1} type = "text"/>])
     }
-    
+
 
     return(
         <div>

@@ -12,15 +12,16 @@
 ---
 
 ```
+
 [
   {
     "Date" : "2022-10-15",
     "name" : "expected",
     "values" : {
-      "Netflix" : .1,
-      "Homework" : .4,
-      "Sleep" : .3,
-      "Midterm Prep" : .2
+      "Netflix" : 0.1,
+      "Homework" : 0.4,
+      "Sleep" : 0.3,
+      "Midterm Prep" : 0.2
 
     }
   },
@@ -28,33 +29,32 @@
     "Date" : "2022-10-15",
     "name" : "actual",
     "values" : {
-      "Netflix" : .1,
-      "Homework" : .3,
-      "Sleep" : .4,
-      "Midterm Prep" : .2
+      "Netflix" : 0.1,
+      "Homework" : 0.3,
+      "Sleep" : 0.4,
+      "Midterm Prep" : 0.2
     }
   },
   {
     "Date" : "2022-10-16",
     "name" : "expected",
     "values" : {
-      "Boba" : .1,
-      "Midterm Prep" : .3,
-      "Homework" : .3,
-      "Sleep" : .3
+      "Boba" : 0.1,
+      "Midterm Prep" : 0.3,
+      "Homework" : 0.3,
+      "Sleep" : 0.3
     }
   },
   {
     "Date" : "2022-10-16",
     "name" : "actual",
     "values" : {
-      "Boba" : .1,
-      "Midterm Prep" : .3,
-      "Homework" : .3,
-      "Sleep" : .3
+      "Boba" : 0.1,
+      "Midterm Prep" : 0.3,
+      "Homework" : 0.3,
+      "Sleep" : 0.3
     }
   }
 ]
-
 
 ```

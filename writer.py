@@ -1,6 +1,7 @@
 import json
 from datetime import date
 from flask import Flask
+from flask import request, make_response, jsonify
 
 app = Flask(__name__)
 
@@ -12,11 +13,13 @@ def addExpected(d):
         jsonFile.close()
 
 
-    # d = {"Netflix" : 9, "Work" : 8, "Sleep" : 7}
+    #d = {"Netflix" : 9, "Work" : 8, "Sleep" : 7}
+    print(d)
+    d = json.loads(d)
 
     def convertToProportions(d):
         for entry in d:
-            d[entry] = d[entry] / 24
+            d[entry] = int(d[entry]) / 24
     convertToProportions(d)
     #print(d)
 
@@ -27,7 +30,7 @@ def addExpected(d):
     json.dump(jsonObject, f)
     f.close()
 
-    return _corsify_actual_response('yoyoyo my name is joe')
+    return _corsify_actual_response(jsonify({'yoyoyo my name is joe': 200}))
 
 # f = open("test2.json", "w")
 # json.dump(d, f)
