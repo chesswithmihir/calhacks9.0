@@ -11,7 +11,9 @@ function App() {
   const [activities, setActivities] = useState([]);
 
   function changeToHome() {
-    axios.get("http://127.0.0.1:5000/readExpected").then((response) => {
+    axios({
+      url: "http://127.0.0.1:5000/readExpected/",
+      method: "POST"}).then((response) => {
       setActivities(response)
       console.log(response)
     });

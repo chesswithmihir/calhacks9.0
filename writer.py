@@ -5,6 +5,21 @@ from flask import request, make_response, jsonify
 
 app = Flask(__name__)
 
+@app.route('/readExpected/', methods=["POST"])
+def read_expected():
+    _build_cors_preflight_response()
+    with open("test.json") as jsonFile:
+        jsonObject = json.load(jsonFile)
+        jsonFile.close()
+    date1 = str(date.today())
+    for i in range(len(jsonObject)):
+        if jsonObject[i]["Date"] == date1:
+            result = []
+            for j in jsonObject[i]["values"]:
+                result.append(j)
+            return _corsify_actual_response(jsonify(result))
+    return _corsify_actual_response(jsonify([]))
+
 @app.route('/addExpected/<d>', methods=["POST"])
 def addExpected(d):
     _build_cors_preflight_response()
@@ -36,8 +51,9 @@ def addExpected(d):
 
     return _corsify_actual_response(jsonify({'yoyoyo my name is joe': 200}))
 
+@app.route("/addActual/<d>", methods=["POST"])
 def addActual(d):
-    # _build_cors_preflight_response()
+    _build_cors_preflight_response()
     with open("test.json") as jsonFile:
         jsonObject = json.load(jsonFile)
         jsonFile.close()
@@ -66,22 +82,9 @@ def addActual(d):
     json.dump(jsonObject, f)
     f.close()
 
-    # return _corsify_actual_response(jsonify({'yoyoyo my name is BILL': 200}))
+    return _corsify_actual_response(jsonify({'yoyoyo my name is BILL': 200}))
 
-def read_expected():
-    with open("test.json") as jsonFile:
-        jsonObject = json.load(jsonFile)
-        jsonFile.close()
 
-    date1 = str(date.today())
-
-    for i in range(len(jsonObject)):
-        if jsonObject[i]["Date"] == date1:
-            result = []
-            for j in jsonObject[i]["values"]:
-                result.append(j)
-            return result
-    return []
 
 def read_actual():
     with open("test.json") as jsonFile:
