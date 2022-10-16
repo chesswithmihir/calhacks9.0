@@ -136,7 +136,16 @@ def calculate_TVD():
     f.close()
 
     return tvd_result
-print(calculate_TVD())
+
+@app.route('/readTVD/', methods=["POST"])
+def read_TVD():
+    _build_cors_preflight_response()
+    with open("test.json") as jsonFile:
+        jsonObject = json.load(jsonFile)
+        jsonFile.close()
+    if jsonFile[-1]["name"] == "expected":
+        return _corsify_actual_response(jsonify({'TVD': -1.0}))
+    return _corsify_actual_response(jsonify({'TVD': jsonFile[-1]["TVD"]})) 
 
 def _build_cors_preflight_response():
     response = make_response()
